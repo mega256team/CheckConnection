@@ -1,0 +1,84 @@
+{
+  "items": [
+
+    {
+      "name": "Instagram1",
+      "ipAddresses": [
+        {
+          "ipAddress": "i.instagram.com",
+          "port": 443
+        }
+      ]
+    },
+    
+    {
+      "name": "Instagram2",
+      "ipAddresses": [
+        {
+          "ipAddress": "gateway.instagram.com",
+          "port": 443
+        }
+      ]
+    },
+
+    {
+      "name": "Telegram1",
+      "ipAddresses": [
+        {
+          "ipAddress": "149.154.167.92",
+          "port": 443
+        }
+      ]
+    },
+
+    {
+      "name": "Telegram2",
+      "ipAddresses": [
+        {
+          "ipAddress": "149.154.165.96",
+          "port": 443
+        }
+      ]
+    },
+    
+    {
+      "name": "Telegram3",
+      "ipAddresses": [
+        {
+          "ipAddress": "t.me",
+          "port": 443
+        }
+      ]
+    },
+    
+    {
+      "name": "Twitter1",
+      "ipAddresses": [
+        {
+          "ipAddress": "api.twitter.com",
+          "port": 443
+        }
+      ]
+    },
+
+    {
+      "name": "ChatGPT1",
+      "ipAddresses": [
+        {
+          "ipAddress": "android.chat.openai.com",
+          "port": 443
+        }
+      ]
+    },
+
+    {
+      "name": "ChatGPT2",
+      "ipAddresses": [
+        {
+          "ipAddress": "ws.chatgpt.com",
+          "port": 443
+        }
+      ]
+    }
+  ]
+}
