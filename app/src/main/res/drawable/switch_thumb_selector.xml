@@ -5,7 +5,7 @@
         <shape android:shape="oval">
             <solid android:color="@color/switchThumbOn" />
             <stroke android:color="@color/switchTrackOn" android:width="4dp"/>
-            <size android:height="32dp" android:width="32dp"/>
+            <size android:height="28dp" android:width="28dp"/>
         </shape>
     </item>
 
@@ -13,7 +13,7 @@
         <shape android:shape="oval">
             <solid android:color="@color/switchThumbOff" />
             <stroke android:color="@color/switchTrackOff" android:width="4dp"/>
-            <size android:height="32dp" android:width="32dp"/>
+            <size android:height="28dp" android:width="28dp"/>
         </shape>
     </item>
 
