@@ -35,7 +35,7 @@
     <string name="languagePersianEnglish">Language (زبان)</string>
     <string name="testboxOverlay">Testboxes Overlay</string>
     <string name="accessiblePing">Accessible Ping</string>
-    <string name="reachableViaTcp">Reachable Via Tcp</string>
+    <string name="reachableViaTcp">Reachable Via Tcp or Https</string>
     <string name="reachableViaHttps">Reachable Via Https</string>
     <string name="domain">Domain</string>
     <string name="country">Country</string>

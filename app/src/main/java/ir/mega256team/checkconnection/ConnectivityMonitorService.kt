@@ -81,8 +81,7 @@ class ConnectivityMonitorService : Service() {
         val context = this
 
         var shouldTestAccessible: Boolean
-        var shouldTestViaTcp: Boolean
-        var shouldTestViaHttps: Boolean
+        var shouldTestViaTcpOrHttps: Boolean
 
         val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
 
@@ -100,20 +99,11 @@ class ConnectivityMonitorService : Service() {
 
                 //=================================================
 
-                if (Utils().getSettings(context, Constants.REACHABLE_VIA_HTTPS_KEY, "1") == "1") {
-                    shouldTestViaHttps = true
+                if (Utils().getSettings(context, Constants.REACHABLE_VIA_TCP_OR_HTTPS_KEY, "1") == "1") {
+                    shouldTestViaTcpOrHttps = true
 
                 } else {
-                    shouldTestViaHttps = false
-                }
-
-                //=================================================
-
-                if (Utils().getSettings(context, Constants.REACHABLE_VIA_TCP_KEY, "1") == "1") {
-                    shouldTestViaTcp = true
-
-                } else {
-                    shouldTestViaTcp = false
+                    shouldTestViaTcpOrHttps = false
                 }
 
                 //=================================================
@@ -123,9 +113,9 @@ class ConnectivityMonitorService : Service() {
                     httpOk = hasUsableInternet()
                 }
 
-                initAddressTestArray2(0, shouldTestViaTcp, shouldTestViaHttps, shouldTestAccessible, httpOk)
-                initAddressTestArray2(1, shouldTestViaTcp, shouldTestViaHttps, shouldTestAccessible, httpOk)
-                initAddressTestArray2(2, shouldTestViaTcp, shouldTestViaHttps, shouldTestAccessible, httpOk)
+                initAddressTestArray(0, shouldTestViaTcpOrHttps, shouldTestAccessible, httpOk)
+                initAddressTestArray(1, shouldTestViaTcpOrHttps, shouldTestAccessible, httpOk)
+                initAddressTestArray(2, shouldTestViaTcpOrHttps, shouldTestAccessible, httpOk)
 
                 val updatedNotification = buildNotification(notifText)
                 notificationManager.notify(Constants.NOTIFICATION_ID, updatedNotification)
@@ -138,21 +128,20 @@ class ConnectivityMonitorService : Service() {
 
     //==============================================================================================
 
-    fun initAddressTestArray2(
+    fun initAddressTestArray(
         index: Int,
-        shouldTestViaTcp: Boolean,
-        shouldTestViaHttps: Boolean,
+        shouldTestViaTcpOrHttps: Boolean,
         shouldTestAccessible: Boolean,
         httpOk: Boolean
     ) {
         if (addressTestArray[index].shouldBeTested) {
-            if (!shouldTestViaTcp && !shouldTestViaHttps && !shouldTestAccessible) { //000
+            if (!shouldTestViaTcpOrHttps && !shouldTestAccessible) { //00
                 notifText += " ${index + 1}❌ "
                 addressTestArray[index].reachable = false
                 addressTestArray[index].testFailed = addressTestArray[index].testFailed + 1
 
 
-            } else if (!shouldTestViaTcp && !shouldTestViaHttps && shouldTestAccessible) { //001
+            } else if (!shouldTestViaTcpOrHttps && shouldTestAccessible) { //01
                 if (httpOk) {
                     notifText += " ${index + 1}✅ "
                     addressTestArray[index].reachable = true
@@ -164,8 +153,9 @@ class ConnectivityMonitorService : Service() {
                     addressTestArray[index].testFailed = addressTestArray[index].testFailed + 1
                 }
 
-            } else if (!shouldTestViaTcp && shouldTestViaHttps && !shouldTestAccessible) { //010
-                if (isIpReachableViaHttps(addressTestArray[index])) {
+
+            } else if (shouldTestViaTcpOrHttps && !shouldTestAccessible) { //10
+                if (isIpOrAddressReachable(addressTestArray[index])) {
                     notifText += " ${index + 1}✅ "
                     addressTestArray[index].reachable = true
                     addressTestArray[index].testSuccess = addressTestArray[index].testSuccess + 1
@@ -176,56 +166,9 @@ class ConnectivityMonitorService : Service() {
                     addressTestArray[index].testFailed = addressTestArray[index].testFailed + 1
                 }
 
-            } else if (!shouldTestViaTcp && shouldTestViaHttps && shouldTestAccessible) { //011
-                if (isIpReachableViaHttps(addressTestArray[index]) && httpOk) {
-                    notifText += " ${index + 1}✅ "
-                    addressTestArray[index].reachable = true
-                    addressTestArray[index].testSuccess = addressTestArray[index].testSuccess + 1
 
-                } else {
-                    notifText += " ${index + 1}❌ "
-                    addressTestArray[index].reachable = false
-                    addressTestArray[index].testFailed = addressTestArray[index].testFailed + 1
-                }
-
-            } else if (shouldTestViaTcp && !shouldTestViaHttps && !shouldTestAccessible) { //100
-                if (isIpReachableViaTcp(addressTestArray[index])) {
-                    notifText += " ${index + 1}✅ "
-                    addressTestArray[index].reachable = true
-                    addressTestArray[index].testSuccess = addressTestArray[index].testSuccess + 1
-
-                } else {
-                    notifText += " ${index + 1}❌ "
-                    addressTestArray[index].reachable = false
-                    addressTestArray[index].testFailed = addressTestArray[index].testFailed + 1
-                }
-
-            } else if (shouldTestViaTcp && !shouldTestViaHttps && shouldTestAccessible) { //101
-                if (isIpReachableViaTcp(addressTestArray[index]) && httpOk) {
-                    notifText += " ${index + 1}✅ "
-                    addressTestArray[index].reachable = true
-                    addressTestArray[index].testSuccess = addressTestArray[index].testSuccess + 1
-
-                } else {
-                    notifText += " ${index + 1}❌ "
-                    addressTestArray[index].reachable = false
-                    addressTestArray[index].testFailed = addressTestArray[index].testFailed + 1
-                }
-
-            } else if (shouldTestViaTcp && shouldTestViaHttps && !shouldTestAccessible) { //110
-                if (isIpReachableViaTcp(addressTestArray[index]) && isIpReachableViaHttps(addressTestArray[index])) {
-                    notifText += " ${index + 1}✅ "
-                    addressTestArray[index].reachable = true
-                    addressTestArray[index].testSuccess = addressTestArray[index].testSuccess + 1
-
-                } else {
-                    notifText += " ${index + 1}❌ "
-                    addressTestArray[index].reachable = false
-                    addressTestArray[index].testFailed = addressTestArray[index].testFailed + 1
-                }
-
-            } else if (shouldTestViaTcp && shouldTestViaHttps && shouldTestAccessible) { //111
-                if (isIpReachableViaTcp(addressTestArray[index]) && isIpReachableViaHttps(addressTestArray[index]) && httpOk) {
+            } else if (shouldTestViaTcpOrHttps && shouldTestAccessible) { //11
+                if (isIpOrAddressReachable(addressTestArray[index]) && httpOk) {
                     notifText += " ${index + 1}✅ "
                     addressTestArray[index].reachable = true
                     addressTestArray[index].testSuccess = addressTestArray[index].testSuccess + 1
@@ -267,6 +210,35 @@ class ConnectivityMonitorService : Service() {
 
     //==============================================================================================
 
+    fun hasUsableInternet(): Boolean {
+        return try {
+            val request = Request.Builder()
+                .url(Constants.clients3Url2)
+                .build()
+
+            val response = client.build().newCall(request).execute()
+            response.use { it.code == 204 }
+
+        } catch (e: Exception) {
+            false
+        }
+    }
+
+    //==============================================================================================
+
+    fun isIpOrAddressReachable(addressTest: AddressTest): Boolean {
+        if (Utils().detectInputType(addressTest.ipOrDomain) == Constants.DOMAIN) {
+            isAddressReachableViaHttps(addressTest)
+
+        } else if (Utils().detectInputType(addressTest.ipOrDomain) == Constants.IPV4) {
+            isIpReachableViaTcp(addressTest)
+        }
+
+        return isIpReachableViaTcp(addressTest)
+    }
+
+    //==============================================================================================
+
     fun isIpReachableViaTcp(addressTest: AddressTest): Boolean {
         return try {
             Socket().use { socket ->
@@ -286,10 +258,10 @@ class ConnectivityMonitorService : Service() {
 
     //==============================================================================================
 
-    fun isIpReachableViaHttps(addressTest: AddressTest): Boolean {
+    fun isAddressReachableViaHttps(addressTest: AddressTest): Boolean {
         return try {
             var https = ""
-            if (!addressTest.ipOrDomain.contains("http")){
+            if (!addressTest.ipOrDomain.contains("http")) {
                 https = "https://"
             }
 
@@ -299,26 +271,11 @@ class ConnectivityMonitorService : Service() {
                 readTimeout = timeOut
                 instanceFollowRedirects = false
             }
+
             conn.connect()
             val code = conn.responseCode
             conn.disconnect()
             code in 200..399
-
-        } catch (e: Exception) {
-            false
-        }
-    }
-
-    //==============================================================================================
-
-    fun hasUsableInternet(): Boolean {
-        return try {
-            val request = Request.Builder()
-                .url(Constants.clients3Url2)
-                .build()
-
-            val response = client.build().newCall(request).execute()
-            response.use { it.code == 204 }
 
         } catch (e: Exception) {
             false

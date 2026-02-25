@@ -62,7 +62,6 @@ class Constants {
         const val DOMAIN: String = "Domain"
 
         const val ACCESSIBLE_PING_KEY: String = "accessiblePing"
-        const val REACHABLE_VIA_TCP_KEY: String = "reachableViaTcp"
-        const val REACHABLE_VIA_HTTPS_KEY: String = "reachableViaHttps"
+        const val REACHABLE_VIA_TCP_OR_HTTPS_KEY: String = "reachableViaTcpOrHttps"
     }
 }

@@ -35,7 +35,7 @@
     <string name="languagePersianEnglish">زبان (Language)</string>
     <string name="testboxOverlay">مکان جعبه های تست</string>
     <string name="accessiblePing">پینگ دسترسی</string>
-    <string name="reachableViaTcp">قابل دسترسی با TCP</string>
+    <string name="reachableViaTcp">قابل دسترسی با TCP یا HTTPS</string>
     <string name="reachableViaHttps">قابل دسترسی با Https</string>
     <string name="domain">دامنه</string>
     <string name="country">کشور</string>

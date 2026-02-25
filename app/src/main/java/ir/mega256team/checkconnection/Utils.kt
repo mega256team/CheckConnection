@@ -213,5 +213,23 @@ class Utils {
 
     //==============================================================================================
 
+    fun detectInputType(input: String): String {
+        val trimmed = input.trim()
 
+        // IPv4 regex
+        val ipv4Regex = Regex("^((25[0-5]|2[0-4]\\d|1\\d{2}|[1-9]?\\d)\\.){3}(25[0-5]|2[0-4]\\d|1\\d{2}|[1-9]?\\d)\$")
+
+        // IPv6 regex (simplified but works for 99% cases)
+        val ipv6Regex = Regex("^[0-9a-fA-F:]+$")
+
+        // Domain regex (supports unicode domains too)
+        val domainRegex = Regex("^(?=.{1,253}\$)(?!-)([a-zA-Z0-9ا-ی]+(-[a-zA-Z0-9ا-ی]+)*\\.)+[a-zA-Zا-ی]{2,}\$")
+
+        return when {
+            ipv4Regex.matches(trimmed) -> Constants.IPV4
+            ipv6Regex.matches(trimmed) && trimmed.contains(":") -> Constants.IPV6
+            domainRegex.matches(trimmed) -> Constants.DOMAIN
+            else -> "Unknown"
+        }
+    }
 }

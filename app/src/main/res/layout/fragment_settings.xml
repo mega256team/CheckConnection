@@ -153,7 +153,7 @@
                     android:fontFamily="@font/iran_yekan_regular"
                     android:text="@string/accessiblePing"
                     android:textColor="@color/c303030"
-                    android:textSize="@dimen/secondText"
+                    android:textSize="@dimen/thirdText"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -174,7 +174,7 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/clReachableViaTcp"
+                android:id="@+id/clReachableViaTcpOrHttps"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/card1"
@@ -183,57 +183,20 @@
                 app:layout_constraintTop_toBottomOf="@+id/clPing">
 
                 <TextView
-                    android:id="@+id/txtReachableViaTcpLabel"
+                    android:id="@+id/txtReachableViaTcpOrHttpsLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:fontFamily="@font/iran_yekan_regular"
                     android:text="@string/reachableViaTcp"
                     android:textColor="@color/c303030"
-                    android:textSize="@dimen/secondText"
+                    android:textSize="@dimen/thirdText"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <Switch
-                    android:id="@+id/swReachableViaTcp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:thumb="@drawable/switch_thumb_selector"
-                    android:track="@drawable/switch_track_selector"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"/>
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/clReachableViaHttps"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/card1"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/clReachableViaTcp">
-
-                <TextView
-                    android:id="@+id/txtReachableViaHttpsLabel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:fontFamily="@font/iran_yekan_regular"
-                    android:text="@string/reachableViaHttps"
-                    android:textColor="@color/c303030"
-                    android:textSize="@dimen/secondText"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <Switch
-                    android:id="@+id/swReachableViaHttps"
+                    android:id="@+id/swReachableViaTcpOrHttps"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"

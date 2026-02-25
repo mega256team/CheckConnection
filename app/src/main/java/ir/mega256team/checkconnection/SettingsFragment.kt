@@ -31,8 +31,7 @@ class SettingsFragment(private val myContext: Context) : Fragment() {
         initLangSpinner()
         initOverlaySpinner()
         initAccessiblePing()
-        initReachableViaTcp()
-        initReachableViaHttps()
+        initReachableViaTcpOrHttps()
         initBackPressed()
 
         binding.imgClose.setOnClickListener { _ -> parentFragmentManager.popBackStack() }
@@ -261,33 +260,17 @@ class SettingsFragment(private val myContext: Context) : Fragment() {
 
     //==============================================================================================
 
-    fun initReachableViaTcp() {
-        val reachableViaTcp = Utils().getSettings(myContext, Constants.REACHABLE_VIA_TCP_KEY, "0")
-        if (reachableViaTcp == "0") {
-            binding.swReachableViaTcp.setChecked(false)
+    fun initReachableViaTcpOrHttps() {
+        val reachableViaTcpOrHttps = Utils().getSettings(myContext, Constants.REACHABLE_VIA_TCP_OR_HTTPS_KEY, "1")
+        if (reachableViaTcpOrHttps == "0") {
+            binding.swReachableViaTcpOrHttps.setChecked(false)
 
         } else {
-            binding.swReachableViaTcp.setChecked(true)
+            binding.swReachableViaTcpOrHttps.setChecked(true)
         }
 
-        binding.swReachableViaTcp.setOnCheckedChangeListener { _, isChecked ->
-            Utils().saveSettings(myContext, Constants.REACHABLE_VIA_TCP_KEY, if (isChecked) "1" else "0")
-        }
-    }
-
-    //==============================================================================================
-
-    fun initReachableViaHttps() {
-        val reachableViaHttps = Utils().getSettings(myContext, Constants.REACHABLE_VIA_HTTPS_KEY, "1")
-        if (reachableViaHttps == "0") {
-            binding.swReachableViaHttps.setChecked(false)
-
-        } else {
-            binding.swReachableViaHttps.setChecked(true)
-        }
-
-        binding.swReachableViaHttps.setOnCheckedChangeListener { _, isChecked ->
-            Utils().saveSettings(myContext, Constants.REACHABLE_VIA_HTTPS_KEY, if (isChecked) "1" else "0")
+        binding.swReachableViaTcpOrHttps.setOnCheckedChangeListener { _, isChecked ->
+            Utils().saveSettings(myContext, Constants.REACHABLE_VIA_TCP_OR_HTTPS_KEY, if (isChecked) "1" else "0")
         }
     }
 
